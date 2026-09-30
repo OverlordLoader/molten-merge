@@ -60,7 +60,8 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
     var theme: BlobTheme = .classic
 
     // Layout (computed in didMove from the scene size).
-    private var world = SKNode()
+    private var world = SKNode()      // blobs, bursts, popups — cleared on reset
+    private var statics = SKNode()    // jar walls/floor — survive reset
     private var jarLeft: CGFloat = 0
     private var jarRight: CGFloat = 0
     private var floorY: CGFloat = 0
@@ -86,6 +87,7 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector(dx: 0, dy: -12)
 
+        addChild(statics)
         addChild(world)
 
         let bg = GlassRenderer.studioBackground(size: size)
@@ -127,7 +129,7 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
             body.collisionBitMask = PhysicsCategory.blob
             body.contactTestBitMask = 0
             node.physicsBody = body
-            world.addChild(node)
+            statics.addChild(node)
         }
         staticBody(at: CGPoint(x: midX, y: floorY - 8), size: CGSize(width: jarW + 40, height: 16))
         let wallH = mouthY + 60 - floorY

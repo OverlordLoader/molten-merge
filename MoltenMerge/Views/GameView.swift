@@ -101,6 +101,11 @@ struct GameView: View {
         .sheet(isPresented: $viewModel.showSettings) {
             SettingsView()
         }
+        .onChange(of: store.selectedThemeID) { _, newValue in
+            if let theme = BlobTheme(rawValue: newValue) {
+                viewModel.applyTheme(theme)
+            }
+        }
         .overlay {
             if viewModel.isGameOver {
                 GameOverView(viewModel: viewModel)
