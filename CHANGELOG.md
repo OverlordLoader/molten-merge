@@ -1,3 +1,7 @@
+## 2026-09-30 — Repair SpriteKit delegate name collision
+
+Actual native compilation found MergeScene.delegate conflicting with inherited SKScene.delegate. Renamed only the game callback property and all its callers to gameDelegate; physics contact delegation and gameplay rules remain intact. Corrective native verification follows.
+
 ## 2026-09-30 â€” Unsigned native simulator verification
 
 Added a free public macOS compile/startup workflow, evidence capture, and a shared Xcode scheme where missing. Supports opening the existing game on Henry's MacBook without App Store submission. No paid service, signing or purchase. Build status is reported separately from full gameplay acceptance.

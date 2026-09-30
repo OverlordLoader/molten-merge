@@ -26,7 +26,7 @@ final class GameViewModel: ObservableObject, MergeSceneDelegate {
         if let scene, sceneSize == size { return scene }
         let scene = MergeScene(size: size)
         scene.scaleMode = .resizeFill
-        scene.delegate = self
+        scene.gameDelegate = self
         scene.theme = StoreManager.shared.selectedTheme
         self.scene = scene
         self.sceneSize = size
