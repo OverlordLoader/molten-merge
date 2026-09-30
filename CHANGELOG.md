@@ -1,3 +1,7 @@
+## 2026-09-30 - Keep game controls inside the iPhone safe area
+
+Actual iPhone16Pro startup screenshot showed the HUD beneath the status bar and Dynamic Island. Respect the safe area for the game content and extend only its black background. Gameplay rules unchanged; corrective screenshot required.
+
 ## 2026-09-30 - Native simulator build repairs
 
 Added unsigned public macOS compile/startup verification and explicit bundle identity. Actual compiler results exposed a game callback colliding with SKScene.delegate, repaired by renaming it gameDelegate. The following build exposed an escaping Task capturing mutating App self in init; use existing singleton managers directly without accessing StateObject before installation. No physics, purchase or gameplay rule changes. Native result is recorded separately.

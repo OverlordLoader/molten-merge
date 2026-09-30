@@ -97,7 +97,7 @@ struct GameView: View {
                 HUDView(viewModel: viewModel)
             }
         }
-        .ignoresSafeArea()
+        .background(Color.black.ignoresSafeArea())
         .sheet(isPresented: $viewModel.showSettings) {
             SettingsView()
         }
