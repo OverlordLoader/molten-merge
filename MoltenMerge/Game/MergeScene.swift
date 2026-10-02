@@ -56,7 +56,7 @@ final class BlobNode: SKNode {
 /// pile rests above the dashed danger line for ~2 seconds.
 final class MergeScene: SKScene, SKPhysicsContactDelegate {
 
-    weak var delegate: MergeSceneDelegate?
+    weak var gameDelegate: MergeSceneDelegate?
     var theme: BlobTheme = .classic
 
     // Layout (computed in didMove from the scene size).
@@ -97,8 +97,8 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
         layoutJar()
         currentTier = .spark
         nextTier = BlobTier.randomDropTier()
-        delegate?.mergeScene(self, didChangeScore: 0)
-        delegate?.mergeScene(self, didChangeTiers: currentTier, next: nextTier)
+        gameDelegate?.mergeScene(self, didChangeScore: 0)
+        gameDelegate?.mergeScene(self, didChangeTiers: currentTier, next: nextTier)
     }
 
     private func layoutJar() {
@@ -169,7 +169,7 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
 
         currentTier = nextTier
         nextTier = BlobTier.randomDropTier()
-        delegate?.mergeScene(self, didChangeTiers: currentTier, next: nextTier)
+        gameDelegate?.mergeScene(self, didChangeTiers: currentTier, next: nextTier)
     }
 
     // MARK: - Merging
@@ -248,7 +248,7 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
 
     private func addScore(_ points: Int, at point: CGPoint, label: String?) {
         score += points
-        delegate?.mergeScene(self, didChangeScore: score)
+        gameDelegate?.mergeScene(self, didChangeScore: score)
         let popup: SKLabelNode
         if let label {
             popup = GlassRenderer.popupLabel(text: label, color: .white, fontSize: 34)
@@ -309,7 +309,7 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
         isPaused = true // freeze the pile behind the game-over overlay
         SoundManager.shared.play(.gameOver)
         Haptics.error()
-        delegate?.mergeSceneDidEnd(self)
+        gameDelegate?.mergeSceneDidEnd(self)
     }
 
     // MARK: - Run control (called from SwiftUI)
@@ -326,8 +326,8 @@ final class MergeScene: SKScene, SKPhysicsContactDelegate {
         currentTier = .spark
         nextTier = BlobTier.randomDropTier()
         dangerLine?.alpha = 0.85
-        delegate?.mergeScene(self, didChangeScore: 0)
-        delegate?.mergeScene(self, didChangeTiers: currentTier, next: nextTier)
+        gameDelegate?.mergeScene(self, didChangeScore: 0)
+        gameDelegate?.mergeScene(self, didChangeTiers: currentTier, next: nextTier)
     }
 
     /// Rewarded-ad Continue: clears the top 3 rows of blobs and resumes.

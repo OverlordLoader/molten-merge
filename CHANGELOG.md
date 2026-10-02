@@ -1,3 +1,11 @@
+## 2026-09-30 - Keep game controls inside the iPhone safe area
+
+Actual iPhone16Pro startup screenshot showed the HUD beneath the status bar and Dynamic Island. Respect the safe area for the game content and extend only its black background. Gameplay rules unchanged; corrective screenshot required.
+
+## 2026-09-30 - Native simulator build repairs
+
+Added unsigned public macOS compile/startup verification and explicit bundle identity. Actual compiler results exposed a game callback colliding with SKScene.delegate, repaired by renaming it gameDelegate. The following build exposed an escaping Task capturing mutating App self in init; use existing singleton managers directly without accessing StateObject before installation. No physics, purchase or gameplay rule changes. Native result is recorded separately.
+
 # Changelog
 
 All notable changes to Molten Merge. The format follows Keep a Changelog;
@@ -34,3 +42,10 @@ entries are added per change. The VISION.md changelog mirrors these.
   (`present(fromRootViewController:...)`); the 11.x pin is enforced by the
   release check. (GMA 12.x renamed Swift labels and 13.x removed the GAD
   prefix — do not bump major without rewriting AdsManager.)
+
+
+## September 30, 2026 - Independent source verification
+
+Declared the app-scoped UserDefaults required-reason API (CA92.1), based on the app's actual preferences and local save calls. This does not certify App Store privacy answers or third-party SDK behavior. Final signed archive privacy reports and actual-device/network behavior remain release gates.
+
+Versioned the previously missing release workflow with pinned actions, app-specific identity/environment, manual main-branch signing and upload disabled by default. Removed the incorrect requirement that workflows must stay outside GitHub. Signing environments/secrets, account budget and actual Mac builds remain unverified; nothing dispatched.

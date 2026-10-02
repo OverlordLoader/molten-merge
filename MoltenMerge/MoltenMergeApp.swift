@@ -7,9 +7,9 @@ struct MoltenMergeApp: App {
 
     init() {
         // Google Mobile Ads: test IDs in DEBUG, real IDs (set by Henry) in release.
-        ads.configure()
+        AdsManager.shared.configure()
         // Pre-load App Store products so Settings shows live prices.
-        Task { await store.requestProducts() }
+        Task { await StoreManager.shared.requestProducts() }
     }
 
     var body: some Scene {

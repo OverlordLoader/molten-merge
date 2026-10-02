@@ -6,11 +6,7 @@ bundle identity, platform floor, App-Store-review safety (no http:// URLs,
 no analytics/tracking SDK imports, no external-open calls), and the
 non-exempt-encryption declaration. Fails loudly on any violation.
 
-NOTE on the release workflow: GitHub blocks pushing `.github/workflows/`
-with the app's token, so the apple-release.yml workflow is maintained
-outside this repo (~/workspace/your_files/moltenmerge-apple-release.yml)
-and uploaded by Henry via the GitHub web UI. The check below validates it
-when present; its absence in-repo is expected, not a failure.
+The release workflow is versioned in this repository; signing remains manual.
 """
 
 import plistlib
@@ -103,16 +99,11 @@ def main():
     check(privacy.exists(), "MoltenMerge/PrivacyInfo.xcprivacy exists")
 
     workflow = ROOT / ".github" / "workflows" / "apple-release.yml"
+    check(workflow.exists(), "versioned release workflow exists")
     if workflow.exists():
         wf = workflow.read_text()
-        check("environment: app-store-release-moltenmerge" in wf,
-              "workflow uses the dedicated app-store-release-moltenmerge environment")
-        check(f"APP_BUNDLE_ID: {EXPECTED_BUNDLE}" in wf,
-              f"workflow signs bundle {EXPECTED_BUNDLE}")
-    else:
-        # Expected: the workflow lives outside the repo (GitHub blocks pushing
-        # .github/workflows/ with the app token). Not a failure.
-        print("PASS: no .github/workflows in repo (workflow is maintained out-of-repo by policy)")
+        check("environment: app-store-release-moltenmerge" in wf, "dedicated release environment")
+        check("APP_BUNDLE_ID: app.moltenmerge.game" in wf, "workflow bundle identity")
 
     if failures:
         print(f"\nMOLTENMERGE-RELEASE-CHECK: {len(failures)} FAILURE(S)")
